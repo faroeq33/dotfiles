@@ -24,8 +24,6 @@ set path+=**
 
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-
-
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 " For Neovim 0.1.3 and 0.1.4 - https://github.com/neovim/neovim/pull/2198
@@ -41,15 +39,11 @@ if (has('termguicolors'))
 endif
 
 " Plug 'morhetz/gruvbox'
-
-
 set background=dark
-
 
 if executable('rg')
 	let g:rg_derive_root='true'
 endif
-
 
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:user_emmet_leader_key=','
