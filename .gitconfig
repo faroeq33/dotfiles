@@ -1,0 +1,6 @@
+[core]
+	excludesfile = /Users/faroeqalves/.gitignore
+	editor = vim
+[user]
+	name = Faroeq Alves
+	email = faroeqalves@gmail.com
