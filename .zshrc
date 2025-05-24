@@ -1,12 +1,11 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # for non-pattern search like in bash
 bindkey "^R" history-incremental-search-backward
-
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -21,7 +20,7 @@ ZSH_THEME="robbyrussell"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -64,7 +63,7 @@ ZSH_THEME="robbyrussell"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="dd.mm.yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -139,8 +138,6 @@ alias pf="cd $HOME/code/portfolio"
 
 alias shopprijs="cd $DOCUMROOT/shopprijs"
 alias pythonworkshop="cd $DOCUMROOT/pythonworkshop"
-# alias lunar=" cd $DOCUMROOT/Lunar-Lander"
-# alias darts=" cd $DOCUMROOT/dartsbond_almere-rare-chicken"
 alias spl=" cd $DOCUMROOT/shopprijs-laravel"
 
 alias rotterdampshop="cd $DOCUMROOT/rotterdamp-shop"
@@ -156,16 +153,12 @@ alias cdp="_goto"
 alias htdocs="cd $HTDOCS"
 alias projects="cd $DOCUMROOT"
 
-alias downloads="cd $DOWNLOADS"
-alias documents="cd /home/faroeq33/Documents"
+# alias downloads="cd $DOWNLOADS"
 
 # run bashrc with preferred code editor
 alias bashrc="$DEFAULTEDITOR ~/.bashrc"
 alias aliases="$DEFAULTEDITOR ~/.bash_aliases"
 alias vimrc="$DEFAULTEDITOR ~/.vimrc"
-
-# open directory or file
-# alias open="nautilus"
 
 # scripts
 alias clr="clear"
@@ -178,18 +171,12 @@ alias sorue="source"
 alias sorce="source"
 alias srce="source"
 
-# games
-alias null="/home/faroeq33/Games/NullpoMino7_5_0/./play_swing"
-
 # git commands
 alias ga="git add ."
 alias gp="git push"
 alias gs="git status"
 alias gst="git status"
 alias gcm="git commit -m"
-
-# devcommands
-alias bs="browser-sync start --proxy "localhost/${PWD##*/}" --files './**/*'"
 
 # sail commands
 alias sail="bash vendor/bin/sail"
@@ -201,7 +188,6 @@ alias pest="./vendor/bin/pest"
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias lt='ls --human-readable --size -1 -S --classify'
 alias lsp="cd $DOCUMROOT && ls -1 $DOCUMROOT"
 
 # pnpm commands
@@ -210,16 +196,13 @@ alias pn="pnpm"
 # copy current directory on clipboard
 alias cpwd="pwd | xclip -selection clipboard"
 
-# copy & pasting through terminal
-alias pbcopy="xsel --clipboard --input"
-alias pbpaste="xsel --clipboard --input"
-
 # flask venv activate command
 alias act=". venv/bin/activate"
 
 # permission helpers
 alias chx="chmod +x"
 
+# for console-ninja extension
 PATH=~/.console-ninja/.bin:$PATH
 
 # fnm
@@ -229,3 +212,25 @@ if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
 
+# zsh completions
+if type brew &>/dev/null; then
+   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+   autoload -Uz compinit
+   compinit
+fi
+
+# Auto-fix ZSH compinit insecure directories
+function fix_compinit_insecure_dirs() {
+  local insecure_dirs=$(compaudit 2>/dev/null)
+  if [[ -n "$insecure_dirs" ]]; then
+    echo "Fixing insecure completion directories..."
+    for dir in ${(f)insecure_dirs}; do
+      chmod 755 "$dir"
+      chmod 755 "$(dirname $dir)"
+    done
+    # Reinitialize completions
+    compinit
+  fi
+}
+fix_compinit_insecure_dirs
